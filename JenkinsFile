@@ -1,0 +1,22 @@
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') {
+      steps {
+        git branch: 'main', url: 'https://github.com/tonpseudo/jenkins-php-deployment.git'
+      }
+    }
+    stage('Test PHP') {
+      steps {
+        // Simple test de syntaxe PHP
+        sh 'php -l index.php'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        // Copier les fichiers vers dossier www local (ajuste selon ton serveur)
+        sh 'cp -r * /var/www/html/jenkins-deploy/'
+      }
+    }
+  }
+}
